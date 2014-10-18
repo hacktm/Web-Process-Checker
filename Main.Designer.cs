@@ -130,7 +130,7 @@
             this.MaximizeBox = false;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Main";
+            this.Text = "Process Checker";
             this.ResumeLayout(false);
             this.PerformLayout();
 

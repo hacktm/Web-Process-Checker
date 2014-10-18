@@ -4,3 +4,9 @@ C:\Users\Ramm\Documents\visual studio 2013\Projects\Process Checker\Web-Process-
 D:\HackTM\Web-Process-Checker\bin\Debug\Process Checker.exe.config
 D:\HackTM\Web-Process-Checker\obj\Debug\Process Checker.exe
 D:\HackTM\Web-Process-Checker\obj\Debug\Process Checker.pdb
+C:\Users\Ramm\Documents\Visual Studio 2013\Projects\Process Checker\Web-Process-Checker\bin\Debug\Process Checker.exe
+C:\Users\Ramm\Documents\Visual Studio 2013\Projects\Process Checker\Web-Process-Checker\bin\Debug\Process Checker.pdb
+C:\Users\Ramm\Documents\Visual Studio 2013\Projects\Process Checker\Web-Process-Checker\obj\Debug\Web-Process-Checker.csprojResolveAssemblyReference.cache
+C:\Users\Ramm\Documents\Visual Studio 2013\Projects\Process Checker\Web-Process-Checker\obj\Debug\Process_Checker.Main.resources
+C:\Users\Ramm\Documents\Visual Studio 2013\Projects\Process Checker\Web-Process-Checker\obj\Debug\Process_Checker.Properties.Resources.resources
+C:\Users\Ramm\Documents\Visual Studio 2013\Projects\Process Checker\Web-Process-Checker\obj\Debug\Web-Process-Checker.csproj.GenerateResource.Cache

@@ -109,6 +109,8 @@ namespace Process_Checker
                 return;
             }
             StartTimers();
+            procBox1.Enabled = false;
+            procBox2.Enabled = false;
             startBtn.Enabled = false;
             stopBtn.Enabled = true;
             statusLabel.Text = "Running";
@@ -117,11 +119,21 @@ namespace Process_Checker
         private void stopBtn_Click(object sender, EventArgs e)
         {
             StopTimers();
+            procBox1.Enabled = true;
+            procBox2.Enabled = true;
             startBtn.Enabled = true;
             stopBtn.Enabled = false;
             statusLabel.Text = "Not Running";
-            Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox1.Text, "ram", "0", "peak", "0", "status", "0");
-            Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox2.Text, "ram", "0", "peak", "0", "status", "0");
+            try
+            {
+                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox1.Text, "ram", "0", "peak", "0", "status", "0");
+                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox2.Text, "ram", "0", "peak", "0", "status", "0");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }
