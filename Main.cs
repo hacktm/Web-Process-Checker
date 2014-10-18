@@ -24,45 +24,30 @@ namespace Process_Checker
             dbTimer.Elapsed += dbTimer_Elapsed;
             cmdTimer.Interval = 15000;
             cmdTimer.Elapsed += cmdTimer_Elapsed;
-        }
 
-        private bool CheckProcName(string procName)
-        {
-            try
+            Process[] processes = Process.GetProcesses();
+            foreach(Process process in processes)
             {
-                Process[] proc = Process.GetProcessesByName(procName);
-                if (proc.Length != 0)
-                    return true;
-                else
-                    return false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
+                processesList.Items.Add(process.ProcessName);
             }
         }
 
         private void dbTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            Process[] proc1 = Process.GetProcessesByName(procBox1.Text);
-            if(proc1.Length != 0)
-            {
-                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox1.Text, "ram", proc1[0].VirtualMemorySize64.ToString(), "peak", proc1[0].PeakVirtualMemorySize64.ToString(),"status", "1");
-            }
-            else
-            {
-                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox1.Text, "ram", "0", "peak", "0", "status", "0");
-            }
-            Process[] proc2 = Process.GetProcessesByName(procBox2.Text);
-            if (proc2.Length != 0)
-            {
-                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox2.Text, "ram", proc2[0].VirtualMemorySize64.ToString(), "peak", proc2[0].PeakVirtualMemorySize64.ToString(), "status", "1");
-            }
-            else
-            {
-                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox2.Text, "ram", "0", "peak", "0", "status", "0");
-            }
+            for (int i = 0; i < processesList.Items.Count; i++)
+                if (processesList.GetItemChecked(i) == true)
+                {
+                    string process_name = processesList.Items[i].ToString();
+                    Process[] process = Process.GetProcessesByName(process_name);
+                    if (process.Length != 0)
+                    {
+                        Web.GetPost("http://10.0.186.210/panel/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", process[0].VirtualMemorySize64.ToString(), "peak", process[0].PeakVirtualMemorySize64.ToString(), "status", "1");
+                    }
+                    else
+                    {
+                        Web.GetPost("http://10.0.186.210/panel/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", "0", "peak", "0", "status", "0");
+                    }
+                }
         }
 
         private void cmdTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -98,19 +83,7 @@ namespace Process_Checker
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            if (!CheckProcName(procBox1.Text))
-            {
-                MessageBox.Show("Process #1 not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (!CheckProcName(procBox2.Text))
-            {
-                MessageBox.Show("Process #2 not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             StartTimers();
-            procBox1.Enabled = false;
-            procBox2.Enabled = false;
             startBtn.Enabled = false;
             stopBtn.Enabled = true;
             statusLabel.Text = "Running";
@@ -119,15 +92,17 @@ namespace Process_Checker
         private void stopBtn_Click(object sender, EventArgs e)
         {
             StopTimers();
-            procBox1.Enabled = true;
-            procBox2.Enabled = true;
             startBtn.Enabled = true;
             stopBtn.Enabled = false;
             statusLabel.Text = "Not Running";
             try
             {
-                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox1.Text, "ram", "0", "peak", "0", "status", "0");
-                Web.GetPost("http://localhost/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", procBox2.Text, "ram", "0", "peak", "0", "status", "0");
+                for (int i = 0; i < processesList.Items.Count; i++)
+                {
+                    processesList.SetItemChecked(i, false);
+                    string process_name = processesList.Items[i].ToString();
+                    Web.GetPost("http://10.0.186.210/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name);
+                }
             }
             catch (Exception ex)
             {
