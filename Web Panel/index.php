@@ -34,7 +34,7 @@
 											</div>
 										</div>
 									</div>
-									<a href="#">
+									<a href="processes.php?process=<?php echo $process['name']; ?>">
 										<div class="panel-footer">
 											<span class="pull-left">Manage <b><?php echo $process['name']; ?></b> process</span>
 											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -50,20 +50,6 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
-                                <!-- /.col-lg-8 (nested) -->
-							</div>
-						</div>
-					</div>
                 </div>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
@@ -75,7 +61,7 @@
                         <div class="panel-body">
                             <div class="list-group">
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <i class="fa fa-comment fa-fw"></i> Pending Commands
                                     <span class="pull-right text-muted small"><em>4 minutes ago</em>
                                     </span>
                                 </a>

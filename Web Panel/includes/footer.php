@@ -7,13 +7,23 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
+	
+	<script>
+		Morris.Bar({
+		  element: 'chart',
+		  data: [
+			{ y: '<?php echo date('H:m',strtotime($process['date'])); ?>', ram: '<?php echo SizeSuffix($process['ram']); ?>', peak: '<?php echo SizeSuffix($process['peak']); ?>' }
+		  ],
+		  xkey: 'y',
+		  ykeys: ['ram', 'peak'],
+		  labels: ['RAM', 'Peak']
+		});
+	</script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="js/sb-admin-2.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
 
