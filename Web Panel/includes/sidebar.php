@@ -11,6 +11,17 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+						<li>
+							<a href="#"><i class="fa fa-group fa-fw"></i> Administration<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="add_user.php"><i class="fa fa-user fa-fw"></i> Add User</a>
+								</li>
+								<li>
+									<a href="delete_user.php"><i class="fa fa-minus-circle fa-fw"></i> Delete User</a>
+								</li>
+                            </ul>
+						</li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

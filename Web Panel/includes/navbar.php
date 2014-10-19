@@ -57,7 +57,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Process Checker</a>
+                <a class="navbar-brand" href="index.php"><img src="css/logo.png"> Process Checker</a>
             </div>
             <!-- /.navbar-header -->
 
