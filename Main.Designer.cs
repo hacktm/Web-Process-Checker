@@ -79,7 +79,6 @@
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(357, 24);
             this.statusLabel.TabIndex = 6;
-            this.statusLabel.Text = "Not Running";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // processesList
@@ -95,6 +94,7 @@
             this.processesList.Size = new System.Drawing.Size(329, 264);
             this.processesList.TabIndex = 7;
             this.processesList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.processesList_ItemCheck);
+            this.processesList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             // 
             // Main
             // 
@@ -116,6 +116,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Process Checker";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.ResumeLayout(false);
 
         }

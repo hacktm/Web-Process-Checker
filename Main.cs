@@ -35,11 +35,9 @@ namespace Process_Checker
 
         private void dbTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            int nr = 0;
             for (int i = 0; i < processesList.Items.Count; i++)
                 if (processesList.GetItemChecked(i) == true)
                 {
-                    nr++;
                     string process_name = processesList.Items[i].ToString();
                     Process[] process = Process.GetProcessesByName(process_name);
                     if (process.Length != 0)
@@ -51,7 +49,7 @@ namespace Process_Checker
                         Web.GetPost("http://localhost/panel/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", "0", "peak", "0", "status", "0");
                     }
                 }
-            notifyIcon.Text = "Monitoring " + nr + " processes";
+            notifyIcon.Text = "Monitoring " + processesList.Items.Count + " processes";
         }
 
         private void cmdTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -67,7 +65,7 @@ namespace Process_Checker
                 cmdTimer.Start();
                 startBtn.Enabled = false;
                 stopBtn.Enabled = true;
-                statusLabel.Text = "Running";
+                statusLabel.Text = "Monitoring " + processesList.Items.Count + " processes";
             }
             catch (Exception ex)
             {
@@ -83,7 +81,7 @@ namespace Process_Checker
                 cmdTimer.Stop();
                 startBtn.Enabled = true;
                 stopBtn.Enabled = false;
-                statusLabel.Text = "Not Running";
+                statusLabel.Text = "";
                 notifyIcon.Text = "Idle";
                 Uncheck();
             }
@@ -155,6 +153,17 @@ namespace Process_Checker
         {
             if(e.NewValue == CheckState.Unchecked)
                 Uncheck(processesList.Items[e.Index].ToString());
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Control && e.KeyCode == Keys.A)
+            {
+                for (int i = 0; i < processesList.Items.Count; i++)
+                {
+                    processesList.SetItemChecked(i, true);
+                }
+            }
         }
     }
 }
