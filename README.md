@@ -4,7 +4,7 @@ Process checker w/ Web panel.
 
 Installation
 ===================
-1. Create a database using the sql file provided (not added yet).
+1. Create a database using the /Process Checker.sql/ file provided in the /Web Panel/ folder.
 2. Add db credentials to web panel's config file located in /handlers/config.php.
 3. Start the executable.
 
