@@ -236,7 +236,8 @@ namespace Process_Checker
 
         private void reloadButton_Click(object sender, EventArgs e)
         {
-            LoadList();
+            if(MessageBox.Show("Are you sure you want to reload? All checked processes will be unchecked!", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+                LoadList();
         }
 
         private void panelButton_Click(object sender, EventArgs e)
