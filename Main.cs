@@ -27,41 +27,18 @@ namespace Process_Checker
             dbTimer.Elapsed += dbTimer_Elapsed;
             cmdTimer.Interval = 500;
             cmdTimer.Elapsed += cmdTimer_Elapsed;
-
-            Process[] processes = Process.GetProcesses();
-            foreach(Process process in processes)
-            {
-                processesList.Items.Add(process.ProcessName);
-            }
+            LoadList();
             this.ActiveControl = processesList;
         }
 
-        public string AddSlashes(string InputTxt)
+        private void LoadList()
         {
-            string Result = InputTxt;
-            try
+            processesList.Items.Clear();
+            Process[] processes = Process.GetProcesses();
+            foreach (Process process in processes)
             {
-                Result = System.Text.RegularExpressions.Regex.Replace(InputTxt, @"[\000\010\011\012\015\032\042\047\134\140]", "\\$0");
+                processesList.Items.Add(process.ProcessName);
             }
-            catch (Exception Ex)
-            {
-                Console.WriteLine(Ex.Message);
-            }
-            return Result;
-        }
-
-        public string StripSlashes(string InputTxt)
-        {
-            string Result = InputTxt;
-            try
-            {
-                Result = System.Text.RegularExpressions.Regex.Replace(InputTxt, @"(\\)([\000\010\011\012\015\032\042\047\134\140])", "$2");
-            }
-            catch (Exception Ex)
-            {
-                Console.WriteLine(Ex.Message);
-            }
-            return Result;
         }
 
         private void dbTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -75,11 +52,11 @@ namespace Process_Checker
                     Process[] process = Process.GetProcessesByName(process_name);
                     if (process.Length != 0)
                     {
-                        Web.GetPost("http://localhost/panel/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", process[0].VirtualMemorySize64.ToString(), "peak", process[0].PeakVirtualMemorySize64.ToString(), "status", "1");
+                        Web.GetPost(url.Text + "/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", process[0].VirtualMemorySize64.ToString(), "peak", process[0].PeakVirtualMemorySize64.ToString(), "status", "1");
                     }
                     else
                     {
-                        Web.GetPost("http://localhost/panel/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", "0", "peak", "0", "status", "0");
+                        Web.GetPost(url.Text + "/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", "0", "peak", "0", "status", "0");
                     }
                 }
             notifyIcon.Text = "Monitoring " + checkedProcessesCount + " processes";
@@ -92,7 +69,7 @@ namespace Process_Checker
                 Process[] proc = Process.GetProcessesByName(process_name);
                 if (proc.Length != 0)
                 {
-                    Web.GetPost("http://localhost/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name);
+                    Web.GetPost(url.Text + "/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name);
                     proc[0].Kill();
                     if (uncheck)
                     {
@@ -134,7 +111,7 @@ namespace Process_Checker
         {
             try
             {
-                string Data = Web.GetPost("http://localhost/panel/handlers/handler.php", "key", "jf9uh4iuhjf0wehfj93");
+                string Data = Web.GetPost(url.Text + "/handlers/handler.php", "key", "jf9uh4iuhjf0wehfj93");
                 string[] Command = Data.Split('|');
                 switch (Command[0])
                 {
@@ -188,7 +165,7 @@ namespace Process_Checker
             {
                 try
                 {
-                    Web.GetPost("http://localhost/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process);
+                    Web.GetPost(url.Text + "/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process);
                 }
                 catch (Exception ex)
                 {
@@ -202,7 +179,7 @@ namespace Process_Checker
                     for (int i = 0; i < processesList.Items.Count; i++)
                     {
                         if(processesList.GetItemChecked(i))
-                            Web.GetPost("http://localhost/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", processesList.Items[i].ToString());
+                            Web.GetPost(url.Text + "/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", processesList.Items[i].ToString());
                     }
                 }
                 catch (Exception ex)
@@ -255,6 +232,16 @@ namespace Process_Checker
                     processesList.SetItemChecked(i, true);
                 }
             }
+        }
+
+        private void reloadButton_Click(object sender, EventArgs e)
+        {
+            LoadList();
+        }
+
+        private void panelButton_Click(object sender, EventArgs e)
+        {
+            Process.Start(url.Text);
         }
     }
 }

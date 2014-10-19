@@ -35,6 +35,9 @@
             this.stopBtn = new System.Windows.Forms.Button();
             this.statusLabel = new System.Windows.Forms.Label();
             this.processesList = new System.Windows.Forms.CheckedListBox();
+            this.panelButton = new System.Windows.Forms.Button();
+            this.reloadButton = new System.Windows.Forms.Button();
+            this.url = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // notifyIcon
@@ -50,7 +53,7 @@
             // 
             this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.startBtn.Location = new System.Drawing.Point(16, 279);
+            this.startBtn.Location = new System.Drawing.Point(12, 270);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(157, 30);
             this.startBtn.TabIndex = 2;
@@ -63,7 +66,7 @@
             this.stopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.stopBtn.Enabled = false;
-            this.stopBtn.Location = new System.Drawing.Point(188, 279);
+            this.stopBtn.Location = new System.Drawing.Point(184, 270);
             this.stopBtn.Name = "stopBtn";
             this.stopBtn.Size = new System.Drawing.Size(157, 30);
             this.stopBtn.TabIndex = 3;
@@ -75,7 +78,7 @@
             // 
             this.statusLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.Location = new System.Drawing.Point(0, 312);
+            this.statusLabel.Location = new System.Drawing.Point(0, 379);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(357, 24);
             this.statusLabel.TabIndex = 6;
@@ -99,12 +102,48 @@
             this.processesList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.processesList_ItemCheck);
             this.processesList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             // 
+            // panelButton
+            // 
+            this.panelButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelButton.Location = new System.Drawing.Point(184, 306);
+            this.panelButton.Name = "panelButton";
+            this.panelButton.Size = new System.Drawing.Size(157, 30);
+            this.panelButton.TabIndex = 8;
+            this.panelButton.Text = "Panel";
+            this.panelButton.UseVisualStyleBackColor = true;
+            this.panelButton.Click += new System.EventHandler(this.panelButton_Click);
+            // 
+            // reloadButton
+            // 
+            this.reloadButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.reloadButton.Location = new System.Drawing.Point(12, 306);
+            this.reloadButton.Name = "reloadButton";
+            this.reloadButton.Size = new System.Drawing.Size(157, 30);
+            this.reloadButton.TabIndex = 7;
+            this.reloadButton.Text = "Reload";
+            this.reloadButton.UseVisualStyleBackColor = true;
+            this.reloadButton.Click += new System.EventHandler(this.reloadButton_Click);
+            // 
+            // url
+            // 
+            this.url.Location = new System.Drawing.Point(12, 342);
+            this.url.Name = "url";
+            this.url.Size = new System.Drawing.Size(329, 27);
+            this.url.TabIndex = 9;
+            this.url.Text = "http://localhost/panel";
+            this.url.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(357, 336);
+            this.ClientSize = new System.Drawing.Size(357, 403);
+            this.Controls.Add(this.url);
+            this.Controls.Add(this.panelButton);
+            this.Controls.Add(this.reloadButton);
             this.Controls.Add(this.processesList);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.stopBtn);
@@ -121,6 +160,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -131,5 +171,8 @@
         private System.Windows.Forms.Button stopBtn;
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.CheckedListBox processesList;
+        private System.Windows.Forms.Button panelButton;
+        private System.Windows.Forms.Button reloadButton;
+        private System.Windows.Forms.TextBox url;
     }
 }
