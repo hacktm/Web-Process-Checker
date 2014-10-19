@@ -1,6 +1,6 @@
  <?php
 	require('config.php');
-	if($_POST['key'] == "jf9uh4iuhjf0wehfj93")
+	if($_POST['key'] == $key)
 	{
 		$query = mysqli_query($conn, "SELECT * FROM processes WHERE name = '".$_POST['name']."'");
 		if(mysqli_num_rows($query) != 0)
@@ -9,7 +9,9 @@
 		}
 		else
 		{
-			mysqli_query($conn, "INSERT INTO processes (name, ram, peak, status) VALUES ('".$_POST['name']."','".$_POST['ram']."',peak = '".$_POST['peak']."', '".$_POST['status']."')");
+			mysqli_query($conn, "INSERT INTO processes (name, ram, peak, status) VALUES ('".$_POST['name']."','".$_POST['ram']."', '".$_POST['peak']."', '".$_POST['status']."')");
 		}
 	}
+	else
+		echo "Unauthorized!";
  ?>
