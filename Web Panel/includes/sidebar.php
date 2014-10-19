@@ -46,7 +46,7 @@
 			  }
 			menuProcesses.open("GET","ajax/get_processes.php?part=menu",true);
 			menuProcesses.send();
-			setTimeout(getMenuProcesses, 500);
+			setTimeout(getMenuProcesses, 5000);
 		}
 		getMenuProcesses();
 		</script>

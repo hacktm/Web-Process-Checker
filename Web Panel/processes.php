@@ -37,11 +37,14 @@
 								
 							</div>
 							<div class="row">
-								<div class="col-lg-6">
-									<a href="handlers/add_command.php?com=RestartProcess&proc=<?php echo $_GET['process']; ?>" class="btn btn-large btn-primary btn-block"><i class="fa fa-rotate-left fa-fw"></i> Restart</a>
+								<div class="col-lg-4">
+									<button class="btn btn-large btn-primary btn-block"><i class="fa fa-play fa-fw"></i> Start</button>
 								</div>
-								<div class="col-lg-6">
-									<a href="handlers/add_command.php?com=StopProcess&proc=<?php echo $_GET['process']; ?>" class="btn btn-large btn-primary btn-block"><i class="fa fa-stop fa-fw"></i> Stop</a>
+								<div class="col-lg-4">
+									<button class="btn btn-large btn-primary btn-block"><i class="fa fa-rotate-left fa-fw"></i> Restart</button>
+								</div>
+								<div class="col-lg-4">
+									<button class="btn btn-large btn-primary btn-block"><i class="fa fa-stop fa-fw"></i> Stop</button>
 								</div>
 							</div>
                         </div>
@@ -49,8 +52,33 @@
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
-				<div class="col-lg-4">
+                <!-- /.col-lg-8 -->
+				
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Pending Commands
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-comment fa-fw"></i> test
+                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                                    </span>
+                                </a>
+                            </div>
+                            <!-- /.list-group -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+			<div class="row">
+				<div class="col-lg-8">
                     <div class="panel panel-default">
 						<div class="panel-heading">
 							<i class="fa fa-bar-chart-o fa-fw"></i> Usage
@@ -65,9 +93,7 @@
 						</div>
 					</div>
 				</div>
-            </div>
-            <!-- /.row -->
-				
+			</div>
         </div>
         <!-- /#page-wrapper -->
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
@@ -91,7 +117,7 @@
 		  }
 		processInfo.open("GET","ajax/get_process_info.php?part=process-info&process=<?php echo $_GET['process']; ?>",true);
 		processInfo.send();
-		setTimeout(getProcess, 500);
+		setTimeout(getProcess, 5000);
 	}
 	getProcess();
 	
@@ -118,7 +144,7 @@
 		  }
 		chartInfo.open("GET","ajax/get_process_info.php?part=chart&process=<?php echo $_GET['process']; ?>",false);
 		chartInfo.send();
-		setTimeout(getChartInfo, 500);
+		setTimeout(getChartInfo, 5000);
 	}
 	getChartInfo();
 	
