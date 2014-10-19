@@ -94,6 +94,7 @@
             this.processesList.Name = "processesList";
             this.processesList.Size = new System.Drawing.Size(329, 264);
             this.processesList.TabIndex = 7;
+            this.processesList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.processesList_ItemCheck);
             // 
             // Main
             // 

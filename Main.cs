@@ -85,23 +85,41 @@ namespace Process_Checker
                 stopBtn.Enabled = false;
                 statusLabel.Text = "Not Running";
                 notifyIcon.Text = "Idle";
+                Uncheck();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Uncheck(string process = null)
+        {
+            if (process != null)
+            {
                 try
                 {
-                    for (int i = 0; i < processesList.Items.Count; i++)
-                    {
-                        processesList.SetItemChecked(i, false);
-                        string process_name = processesList.Items[i].ToString();
-                        Web.GetPost("http://localhost/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name);
-                    }
+                    Web.GetPost("http://localhost/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    for (int i = 0; i < processesList.Items.Count; i++)
+                    {
+                        if(processesList.GetItemChecked(i))
+                            Web.GetPost("http://localhost/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", processesList.Items[i].ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -131,6 +149,12 @@ namespace Process_Checker
         {
             this.Show();
             WindowState = FormWindowState.Normal;
+        }
+
+        private void processesList_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if(e.NewValue == CheckState.Unchecked)
+                Uncheck(processesList.Items[e.Index].ToString());
         }
     }
 }
