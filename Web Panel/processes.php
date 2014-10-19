@@ -10,13 +10,17 @@
 	else
 	{
 		$query = mysqli_query($conn, "SELECT * FROM processes WHERE name = '".$_GET['process']."'");
-		$process = mysqli_fetch_array($query);
+		if(mysqli_num_rows($query) == 0)
+		{
+			echo '<script>alert("Process not found!");window.location.replace("index.php");</script>';
+			die();
+		}
 	}
 ?>
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Process <b><?php echo $process['name']; ?></b></h1>
+                    <h1 class="page-header">Process <b><?php echo $_GET['process']; ?></b></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -29,25 +33,8 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-							<div class="row">
-								<div class="col-lg-4">
-									<div class="panel-body text-center">
-										RAM Usage
-										<span class="badge"><?php echo SizeSuffix($process['ram']); ?></span>
-									</div>
-								</div>
-								<div class="col-lg-4">
-									<div class="panel-body text-center">
-										RAM Peak
-										<span class="badge"><?php echo SizeSuffix($process['peak']); ?></span>
-									 </div>
-								</div>
-								<div class="col-lg-4">
-									<div class="panel-body text-center">
-										Status
-										<span class="badge"><?php if($process['status']) echo "Running"; else echo "Not Running"; ?></span>
-									</div>
-								</div>
+							<div id="process-info" class="row">
+								
 							</div>
 							<div class="row">
 								<div class="col-lg-4">
@@ -109,7 +96,60 @@
 			</div>
         </div>
         <!-- /#page-wrapper -->
-
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
+	
+	<script id="chart-script">
+		
+	</script>
+		
+	<script>
+	function getProcess() {
+		if (window.XMLHttpRequest) {
+			processInfo=new XMLHttpRequest();
+			} else {
+			processInfo=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		  processInfo.onreadystatechange=function() {
+			if (processInfo.readyState==4 && processInfo.status==200) {
+			  document.getElementById("process-info").innerHTML=processInfo.responseText;
+			}
+		  }
+		processInfo.open("GET","ajax/get_process_info.php?part=process-info&process=<?php echo $_GET['process']; ?>",true);
+		processInfo.send();
+		setTimeout(getProcess, 5000);
+	}
+	getProcess();
+	
+	function getChartInfo() {
+		if (window.XMLHttpRequest) {
+			chartInfo=new XMLHttpRequest();
+			} else {
+			chartInfo=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		  chartInfo.onreadystatechange=function() {
+			if (chartInfo.readyState==4 && chartInfo.status==200) {
+			  document.getElementById("chart").innerHTML="";
+			  var result = chartInfo.responseText.split("|");
+			  Morris.Bar({
+		  element: 'chart',
+		  data: [
+			{ y: result[0], ram: result[1], peak: result[2] }
+		  ],
+		  xkey: 'y',
+		  ykeys: ['ram', 'peak'],
+		  labels: ['RAM', 'Peak']
+		});
+			}
+		  }
+		chartInfo.open("GET","ajax/get_process_info.php?part=chart&process=<?php echo $_GET['process']; ?>",false);
+		chartInfo.send();
+		setTimeout(getChartInfo, 5000);
+	}
+	getChartInfo();
+	
+	
+	</script>
     </div>
     <!-- /#wrapper -->
 

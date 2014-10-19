@@ -17,35 +17,8 @@
                             <i class="fa fa-bar-chart-o fa-fw"></i> Processes
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
-						<?php
-							while($process = mysqli_fetch_array($processes_query))
-							{
-						?>
-                            <div class="col-lg-6 col-md-6">
-								<div class="panel panel-<?php if($process['status']) echo 'green'; else echo 'red'; ?>">
-									<div class="panel-heading">
-										<div class="row">
-											<div class="col-xs-3">
-												<i class="fa fa-tasks fa-5x"></i>
-											</div>
-											<div class="col-xs-9 text-right">
-												<div class="huge"><?php echo $process['name']; ?></div>
-											</div>
-										</div>
-									</div>
-									<a href="processes.php?process=<?php echo $process['name']; ?>">
-										<div class="panel-footer">
-											<span class="pull-left">Manage <b><?php echo $process['name']; ?></b> process</span>
-											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
-									</a>
-								</div>
-							</div>
-						<?php
-							}
-						?>
+                        <div id="processes" class="panel-body">
+						
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -55,7 +28,7 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                            <i class="fa fa-bell fa-fw"></i> Pending Commands
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -78,7 +51,24 @@
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
-
+	<script>
+	function getProcesses() {
+		if (window.XMLHttpRequest) {
+			dashboardProcesses=new XMLHttpRequest();
+			} else {
+			dashboardProcesses=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		  dashboardProcesses.onreadystatechange=function() {
+			if (dashboardProcesses.readyState==4 && dashboardProcesses.status==200) {
+			  document.getElementById("processes").innerHTML=dashboardProcesses.responseText;
+			}
+		  }
+		dashboardProcesses.open("GET","ajax/get_processes.php?part=dashboard",true);
+		dashboardProcesses.send();
+		setTimeout(getProcesses, 5000);
+	}
+	getProcesses();
+	</script>
     </div>
     <!-- /#wrapper -->
 <?php require("includes/footer.php"); ?>
