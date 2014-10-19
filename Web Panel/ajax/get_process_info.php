@@ -29,5 +29,5 @@
 	}
 	else
 		if($_GET['part'] == "chart")
-			echo date("H:m", time($process['date']))."|".$process['ram']."|".$process['peak'];
+			echo date("H:i", time($process['date']))."|".$process['ram']."|".$process['peak'];
 ?>
