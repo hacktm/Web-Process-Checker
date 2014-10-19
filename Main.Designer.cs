@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.startBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
@@ -38,8 +39,12 @@
             // 
             // notifyIcon
             // 
-            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.BalloonTipText = "Idle";
+            this.notifyIcon.BalloonTipTitle = "Process Checker";
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "Idle";
             this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
             // startBtn
             // 
@@ -82,12 +87,12 @@
             this.processesList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.processesList.BackColor = System.Drawing.SystemColors.Control;
-            this.processesList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.processesList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.processesList.Cursor = System.Windows.Forms.Cursors.Default;
             this.processesList.FormattingEnabled = true;
             this.processesList.Location = new System.Drawing.Point(16, 12);
             this.processesList.Name = "processesList";
-            this.processesList.Size = new System.Drawing.Size(329, 266);
+            this.processesList.Size = new System.Drawing.Size(329, 264);
             this.processesList.TabIndex = 7;
             // 
             // Main
@@ -103,11 +108,13 @@
             this.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Process Checker";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.ResumeLayout(false);
 
         }
