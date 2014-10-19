@@ -17,6 +17,8 @@ namespace Process_Checker
 
         System.Timers.Timer cmdTimer = new System.Timers.Timer();
 
+        int checkedProcessesCount = 0;
+
         public Main()
         {
             InitializeComponent();
@@ -31,13 +33,16 @@ namespace Process_Checker
             {
                 processesList.Items.Add(process.ProcessName);
             }
+            this.ActiveControl = processesList;
         }
 
         private void dbTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+            checkedProcessesCount = 0;
             for (int i = 0; i < processesList.Items.Count; i++)
                 if (processesList.GetItemChecked(i) == true)
                 {
+                    checkedProcessesCount++;
                     string process_name = processesList.Items[i].ToString();
                     Process[] process = Process.GetProcessesByName(process_name);
                     if (process.Length != 0)
@@ -49,7 +54,7 @@ namespace Process_Checker
                         Web.GetPost("http://localhost/panel/handlers/update_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name, "ram", "0", "peak", "0", "status", "0");
                     }
                 }
-            notifyIcon.Text = "Monitoring " + processesList.Items.Count + " processes";
+            notifyIcon.Text = "Monitoring " + checkedProcessesCount + " processes";
         }
 
         private void cmdTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -65,7 +70,7 @@ namespace Process_Checker
                 cmdTimer.Start();
                 startBtn.Enabled = false;
                 stopBtn.Enabled = true;
-                statusLabel.Text = "Monitoring " + processesList.Items.Count + " processes";
+                statusLabel.Text = "";
             }
             catch (Exception ex)
             {
@@ -81,7 +86,7 @@ namespace Process_Checker
                 cmdTimer.Stop();
                 startBtn.Enabled = true;
                 stopBtn.Enabled = false;
-                statusLabel.Text = "";
+                statusLabel.Text = "Choose one or more processes";
                 notifyIcon.Text = "Idle";
                 Uncheck();
             }

@@ -53,7 +53,7 @@
             this.startBtn.Location = new System.Drawing.Point(16, 279);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(157, 30);
-            this.startBtn.TabIndex = 4;
+            this.startBtn.TabIndex = 2;
             this.startBtn.Text = "Start";
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
@@ -66,7 +66,7 @@
             this.stopBtn.Location = new System.Drawing.Point(188, 279);
             this.stopBtn.Name = "stopBtn";
             this.stopBtn.Size = new System.Drawing.Size(157, 30);
-            this.stopBtn.TabIndex = 5;
+            this.stopBtn.TabIndex = 3;
             this.stopBtn.Text = "Stop";
             this.stopBtn.UseVisualStyleBackColor = true;
             this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
@@ -79,6 +79,7 @@
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(357, 24);
             this.statusLabel.TabIndex = 6;
+            this.statusLabel.Text = "Choose one or more processes";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // processesList
@@ -87,12 +88,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.processesList.BackColor = System.Drawing.SystemColors.Control;
             this.processesList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.processesList.CheckOnClick = true;
             this.processesList.Cursor = System.Windows.Forms.Cursors.Default;
             this.processesList.FormattingEnabled = true;
-            this.processesList.Location = new System.Drawing.Point(16, 12);
+            this.processesList.Location = new System.Drawing.Point(2, 0);
             this.processesList.Name = "processesList";
-            this.processesList.Size = new System.Drawing.Size(329, 264);
-            this.processesList.TabIndex = 7;
+            this.processesList.Size = new System.Drawing.Size(354, 264);
+            this.processesList.Sorted = true;
+            this.processesList.TabIndex = 1;
             this.processesList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.processesList_ItemCheck);
             this.processesList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             // 
