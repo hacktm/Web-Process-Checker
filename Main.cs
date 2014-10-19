@@ -23,9 +23,9 @@ namespace Process_Checker
         {
             InitializeComponent();
             this.SizeChanged += new EventHandler(FormMinimized);
-            dbTimer.Interval = 5000;
+            dbTimer.Interval = 500;
             dbTimer.Elapsed += dbTimer_Elapsed;
-            cmdTimer.Interval = 5000;
+            cmdTimer.Interval = 500;
             cmdTimer.Elapsed += cmdTimer_Elapsed;
 
             Process[] processes = Process.GetProcesses();
@@ -34,6 +34,34 @@ namespace Process_Checker
                 processesList.Items.Add(process.ProcessName);
             }
             this.ActiveControl = processesList;
+        }
+
+        public string AddSlashes(string InputTxt)
+        {
+            string Result = InputTxt;
+            try
+            {
+                Result = System.Text.RegularExpressions.Regex.Replace(InputTxt, @"[\000\010\011\012\015\032\042\047\134\140]", "\\$0");
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.Message);
+            }
+            return Result;
+        }
+
+        public string StripSlashes(string InputTxt)
+        {
+            string Result = InputTxt;
+            try
+            {
+                Result = System.Text.RegularExpressions.Regex.Replace(InputTxt, @"(\\)([\000\010\011\012\015\032\042\047\134\140])", "$2");
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.Message);
+            }
+            return Result;
         }
 
         private void dbTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -57,9 +85,67 @@ namespace Process_Checker
             notifyIcon.Text = "Monitoring " + checkedProcessesCount + " processes";
         }
 
+        private void StopProcess(string process_name, bool uncheck = true)
+        {
+            try
+            {
+                Process[] proc = Process.GetProcessesByName(process_name);
+                if (proc.Length != 0)
+                {
+                    Web.GetPost("http://localhost/panel/handlers/delete_db.php", "key", "jf9uh4iuhjf0wehfj93", "name", process_name);
+                    proc[0].Kill();
+                    if (uncheck)
+                    {
+                        for (int i = 0; i < processesList.Items.Count; i++)
+                        {
+                            if (processesList.Items[i].ToString() == process_name)
+                                processesList.SetItemChecked(i, false);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+        }
+
+        private void RestartProcess(string process_name)
+        {
+            try
+            {
+                string filename = null;
+                Process[] proc = Process.GetProcessesByName(process_name);
+                if(proc.Length != 0)
+                {
+                    filename = proc[0].MainModule.FileName;
+                }
+                StopProcess(process_name, false);
+                Process.Start(filename);
+            }
+            catch (Exception)
+            {
+                
+                
+            }
+        }
+
         private void cmdTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-
+            try
+            {
+                string Data = Web.GetPost("http://localhost/panel/handlers/handler.php", "key", "jf9uh4iuhjf0wehfj93");
+                string[] Command = Data.Split('|');
+                switch (Command[0])
+                {
+                    case "StopProcess": StopProcess(Command[1]); break;
+                    case "RestartProcess": RestartProcess(Command[1]); break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public void StartTimers()
