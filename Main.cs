@@ -97,6 +97,7 @@ namespace Process_Checker
                 {
                     filename = proc[0].MainModule.FileName;
                 }
+                System.Threading.Thread.Sleep(1000);
                 StopProcess(process_name, false);
                 Process.Start(filename);
             }
