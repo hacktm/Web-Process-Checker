@@ -6,7 +6,7 @@
 	
 	if(isset($_POST['submit']))
 	{
-		$check = mysqli_query($conn,"SELECT * FROM users WHERE username = '".$user."'");
+		$check = mysqli_query($conn,"SELECT * FROM users WHERE username = '".$_POST['username']."'");
 		if(mysqli_num_rows($check) == 0)
 		{
 			$_POST['password'] = MD5($_POST['password']);

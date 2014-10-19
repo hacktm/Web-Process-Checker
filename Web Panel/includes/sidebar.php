@@ -23,6 +23,10 @@
                             </ul>
 						</li>
                     </ul>
+					<div class="text-center">
+					<br>
+					<p>&copy RammBase. All rights reserved.</p>
+					</div>
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
