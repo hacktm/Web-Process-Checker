@@ -9,7 +9,7 @@
 			while($process = mysqli_fetch_array($processes_query))
 			{
 	?>
-			<div class="col-lg-4 col-md-4">
+			<div class="col-lg-6 col-md-6">
 				<div class="panel panel-<?php if($process['status']) echo 'green'; else echo 'red'; ?>">
 					<div class="panel-heading">
 						<div class="row">
